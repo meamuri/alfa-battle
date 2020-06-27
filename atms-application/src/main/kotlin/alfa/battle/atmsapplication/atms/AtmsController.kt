@@ -19,7 +19,7 @@ class AtmsController(
     }
 
     @GetMapping("/{id}")
-    fun getAtmById(@PathVariable id: String): ResponseEntity<AtmResponseSchema> {
+    fun getAtmById(@PathVariable id: Int): ResponseEntity<AtmResponseSchema> {
         atmsService.findAtm(id)
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)

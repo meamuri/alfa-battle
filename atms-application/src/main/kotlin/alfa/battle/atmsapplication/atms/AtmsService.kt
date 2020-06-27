@@ -17,7 +17,7 @@ class AtmsService(
     private val getAtmsUrl = UriComponentsBuilder.fromHttpUrl(baseUrl).path("/atms/").toUriString()
     @Autowired lateinit var restTemplate: RestTemplate
 
-    fun findAtm(id: String): AtmResponseSchema.AtmResponse? {
+    fun findAtm(id: Int): AtmResponseSchema.AtmResponse? {
         logger.info("trying to find $id atm")
         val response: AlfaApiResponse = try {
             restTemplate.getForObject(getAtmsUrl)
@@ -25,7 +25,18 @@ class AtmsService(
             logger.error("exception $e, result not found")
             return null
         }
-        return null
+        return response.data.find { it.deviceId == id }?.toAtmResponse()
+    }
+
+    private fun AlfaApiResponse.Data.toAtmResponse(): AtmResponseSchema.AtmResponse {
+        val response = this
+        return AtmResponseSchema.AtmResponse().apply {
+            deviceId = response.deviceId
+            city = response.address?.city
+            latitude = response.coordinates?.latitude
+            longitude = response.coordinates?.longitude
+            payments = true
+        }
     }
 
     companion object {
