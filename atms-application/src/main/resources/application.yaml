@@ -2,3 +2,4 @@
 integration:
   alfa:
     api-base-url: https://apiws.alfabank.ru/alfabank/alfadevportal/atm-service
+    client-secret:
