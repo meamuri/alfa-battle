@@ -10,4 +10,5 @@ import org.springframework.validation.annotation.Validated
 class AlfaIntegrationConfig{
     lateinit var apiBaseUrl: String
     lateinit var clientSecret: String
+    lateinit var clientId: String
 }
